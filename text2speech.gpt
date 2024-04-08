@@ -1,0 +1,39 @@
+Name: text2speech
+Description: Convert text to speech. 
+Args: text: (required) The text to convert to speech.
+Args: model: (optional) The name of the model to use. Default is "tts-1".
+Args: voice: (optional) The voice to use. Default is "alloy".
+Args: speed: (optional) The speed of the speech. Default is "1.0".
+Args: response_format: (optional) The format of the response. Default is "mp3".
+Args: output_file: (optional) The path to save the output file. Default is "speech".
+
+#!/bin/bash
+
+textArg=${text:-""}
+modelArg=${model:-"tts-1"}
+voiceArg=${voice:-"alloy"}
+speedArg=${speed:-"1.0"}
+responseFormatArg=${response_format:-"mp3"}
+outputFileArg=${output_file:-"speech"}
+
+if [ -z "$OPENAI_API_KEY" ]; then
+    echo "OPENAI_API_KEY is not set. Unable to create a speech. Please set the OPENAI_API_KEY as an environment variable."
+    exit 1
+fi
+
+if [ -z "$textArg" ]; then
+    echo "text argument is empty, but required. Unable to create a speech. Please provide the text arg."
+    exit 1
+fi
+
+curl https://api.openai.com/v1/audio/speech \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "'"$modelArg"'",
+    "input": "'"$textArg"'",
+    "voice": "'"$voiceArg"'",
+    "speed": "'"$speedArg"'",
+    "response_format": "'"$responseFormatArg"'"
+  }' \
+  --output "$outputFileArg.$responseFormatArg"
