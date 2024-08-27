@@ -9,12 +9,12 @@ Args: output_file: (optional) The path to save the output file. Default is "spee
 
 #!/bin/bash
 
-textArg=${text:-""}
-modelArg=${model:-"tts-1"}
-voiceArg=${voice:-"alloy"}
-speedArg=${speed:-"1.0"}
-responseFormatArg=${response_format:-"mp3"}
-outputFileArg=${output_file:-"speech"}
+textArg=${TEXT:-""}
+modelArg=${MODEL:-"tts-1"}
+voiceArg=${VOICE:-"alloy"}
+speedArg=${SPEED:-"1.0"}
+responseFormatArg=${RESPONSE_FORMAT:-"mp3"}
+outputFileArg=${OUTPUT_FILE:-"speech"}
 
 if [ -z "$OPENAI_API_KEY" ]; then
     echo "OPENAI_API_KEY is not set. Unable to create a speech. Please set the OPENAI_API_KEY as an environment variable."
